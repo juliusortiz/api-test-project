@@ -26,6 +26,7 @@ kill -9 <PID>
 Endpoints:
 
 Add user: POST http://localhost:3000/users
+
 {
     "first_name": "Julius",
     "last_name": "Ortiz",
@@ -34,9 +35,9 @@ Add user: POST http://localhost:3000/users
 }
 
 Get users(list): GET http://localhost:3000/users
-Get user: http://localhost:3000/users/<id>
-Delete user: http://localhost:3000/users/<id>
-Update user: http://localhost:3000/users/<id>
+Get user: http://localhost:3000/users/(id)
+Delete user: http://localhost:3000/users/(id)
+Update user: http://localhost:3000/users/(id)
 {
     "first_name": "Julius",
     "last_name": "Ortiz",
