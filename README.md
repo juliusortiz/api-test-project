@@ -34,9 +34,9 @@ Add user: POST http://localhost:3000/users
     "password": "password"
 }
 ```
-Get users(list): GET http://localhost:3000/users. 
-Get user: http://localhost:3000/users/(id)
-Delete user: http://localhost:3000/users/(id). 
+Get users(list): GET http://localhost:3000/users< br / > 
+Get user: http://localhost:3000/users/(id)< br / > 
+Delete user: http://localhost:3000/users/(id)< br / > 
 Update user: http://localhost:3000/users/(id)
 ```json
 {
