@@ -1,54 +1,104 @@
-# api-test-project
-This is for API automation testing
+# API Test Project
 
-Pre-requisites:
-- Node installed
+This project is for API automation testing.
 
-Setup instructions:
-- Clone or download the project
-- Install node_modules "npm install"
-- Install nodemon "npm install -g nodemon"
-- Install bcrypt "npm install bcrypt"
-- Install excel "npm install xlsx"
-- Run the project "npm start"
+---
 
-FAQ:
-Error: listen EADDRINUSE: address already in use :::6000
+## Prerequisites
 
-Solution:
-To view system that uses ports use
-lsof -i :6000
+- [Node.js](https://nodejs.org/) installed
 
-To kill port usage
-kill -9 <PID>
+---
 
-Endpoints:
+## 🚀 Quick Setup
 
-Add user: POST http://localhost:3000/users 
+1. **Clone the repository**
+2. **Install dependencies**
+   ```sh
+   npm install
+   ```
+3. **Start the server**
+   ```sh
+   npm start
+   ```
+
+---
+
+## ❓ FAQ
+
+**Error:**  
+`Error: listen EADDRINUSE: address already in use :::6000`
+
+**Solution:**  
+- To view which process is using the port:
+  ```sh
+  lsof -i :6000
+  ```
+- To kill the process:
+  ```sh
+  kill -9 <PID>
+  ```
+  Replace `<PID>` with the process ID from the previous command.
+
+---
+
+## 📚 API Endpoints
+
+### Add User
+
+**POST** `/users`  
+Request body:
 ```json
 {
-    "first_name": "Julius",
-    "last_name": "Ortiz",
-    "email": "julius.john.roel.ortiz@ing.com",
-    "password": "password"
+  "first_name": "Julius",
+  "last_name": "Ortiz",
+  "email": "julius.john.roel.ortiz@ing.com",
+  "password": "password"
 }
 ```
-Get users(list): GET http://localhost:3000/users<br /> 
-Get user: http://localhost:3000/users/(id)<br /> 
-Delete user: http://localhost:3000/users/(id)<br /> 
-Update user: http://localhost:3000/users/(id)
+
+---
+
+### Get All Users
+
+**GET** `/users`
+
+---
+
+### Get User by ID
+
+**GET** `/users/{id}`
+
+---
+
+### Delete User
+
+**DELETE** `/users/{id}`
+
+---
+
+### Update User
+
+**PATCH** `/users/{id}`  
+Request body:
 ```json
 {
-    "first_name": "Julius",
-    "last_name": "Ortiz",
-    "email": "julius.john.roel.ortiz@ing.com",
-    "password": "password"
+  "first_name": "Julius",
+  "last_name": "Ortiz",
+  "email": "julius.john.roel.ortiz@ing.com",
+  "password": "password"
 }
 ```
-Login: http://localhost:3000/users/login
+
+---
+
+### Login
+
+**POST** `/users/login`  
+Request body:
 ```json
 {
-    "email": "julius.john.roel.ortiz@ing.com",
-    "password": "password"
+  "email": "julius.john.roel.ortiz@ing.com",
+  "password": "password"
 }
 ```
