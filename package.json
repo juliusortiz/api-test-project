@@ -16,7 +16,8 @@
     "express": "^4.21.2",
     "joi": "^17.13.3",
     "nodemon": "^3.1.10",
-    "uuid": "^11.0.3"
+    "uuid": "^11.0.3",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@faker-js/faker": "^9.3.0"

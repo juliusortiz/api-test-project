@@ -2,8 +2,28 @@ import express from 'express';
 const router = express.Router();
 import { v4 as uuidv4 } from 'uuid';
 import bcrypt from 'bcrypt';
+import xlsx from 'xlsx';
+import fs from 'fs';
 
-let users = [];
+// Helper to write users array to Excel
+function saveUsersToExcel(users) {
+    const ws = xlsx.utils.json_to_sheet(users);
+    const wb = xlsx.utils.book_new();
+    xlsx.utils.book_append_sheet(wb, ws, 'Users');
+    xlsx.writeFile(wb, 'users.xlsx');
+}
+
+// Helper to load users from Excel (if file exists)
+function loadUsersFromExcel() {
+    if (fs.existsSync('users.xlsx')) {
+        const wb = xlsx.readFile('users.xlsx');
+        const ws = wb.Sheets['Users'];
+        return xlsx.utils.sheet_to_json(ws);
+    }
+    return [];
+}
+
+let users = loadUsersFromExcel();
 
 // Create user with hashed password
 router.post('/', async (req, res) => {
@@ -13,10 +33,11 @@ router.post('/', async (req, res) => {
         return res.status(400).send('Password is required');
     }
 
-    // Hash the password
     const hashedPassword = await bcrypt.hash(user.password, 10);
+    const newUser = { ...user, password: hashedPassword, id: uuidv4() };
+    users.push(newUser);
 
-    users.push({ ...user, password: hashedPassword, id: uuidv4() });
+    saveUsersToExcel(users);
 
     res.send(`${user.first_name} has been added to the Database`);
 });
@@ -37,6 +58,9 @@ router.get('/:id', (req, res) => {
 router.delete('/:id', (req, res) => {
     const { id } = req.params;
     users = users.filter((user) => user.id !== id);
+
+    saveUsersToExcel(users);
+
     res.send(`${id} deleted successfully from database`);
 });
 
@@ -48,6 +72,9 @@ router.patch('/:id', (req, res) => {
     if (first_name) user.first_name = first_name;
     if (last_name) user.last_name = last_name;
     if (email) user.email = email;
+
+    saveUsersToExcel(users);
+
     res.send(`User with the ${id} has been updated`);
 });
 

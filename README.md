@@ -9,14 +9,13 @@ Setup instructions:
 - Install node_modules "npm install"
 - Install nodemon "npm install -g nodemon"
 - Install bcrypt "npm install bcrypt"
+- Install excel "npm install xlsx"
 - Run the project "npm start"
-
 
 FAQ:
 Error: listen EADDRINUSE: address already in use :::6000
 
 Solution:
-
 To view system that uses ports use
 lsof -i :6000
 
