@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import { v4 as uuidv4 } from 'uuid';
-import bcrypt from 'bcrypt';
+//import bcrypt from 'bcrypt';
 import xlsx from 'xlsx';
 import fs from 'fs';
 
@@ -79,7 +79,7 @@ router.patch('/:id', (req, res) => {
 });
 
 // Login route with password check
-router.post('/login', async (req, res) => {
+router.post('/login', (req, res) => {
     const { email, password } = req.body;
     const user = users.find((u) => u.email === email);
 
@@ -87,10 +87,8 @@ router.post('/login', async (req, res) => {
         return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    // Compare hashed password
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
+    // Compare the encrypted password directly
+    if (password !== user.password) {
         return res.status(401).json({ message: 'Invalid email or password' });
     }
 
@@ -103,6 +101,22 @@ router.post('/login', async (req, res) => {
             last_name: user.last_name
         }
     });
+});
+
+router.post('/', (req, res) => {
+    const user = req.body;
+
+    if (!user.password) {
+        return res.status(400).send('Password is required');
+    }
+
+    // Do NOT hash the password, just store as provided
+    const newUser = { ...user, id: uuidv4() };
+    users.push(newUser);
+
+    saveUsersToExcel(users);
+
+    res.send(`${user.first_name} has been added to the Database`);
 });
 
 export default router;
