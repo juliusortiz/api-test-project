@@ -111,20 +111,4 @@ router.post('/login', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
-    const user = req.body;
-
-    if (!user.password) {
-        return res.status(400).send('Password is required');
-    }
-
-    // Do NOT hash the password, just store as provided
-    const newUser = { ...user, id: uuidv4() };
-    users.push(newUser);
-
-    saveUsersToExcel(users);
-
-    res.send(`${user.first_name} has been added to the Database`);
-});
-
 export default router;
