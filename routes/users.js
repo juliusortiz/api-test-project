@@ -40,7 +40,8 @@ router.post('/', async (req, res) => {
 
     saveUsersToExcel(users);
 
-    res.send(`${user.first_name} has been added to the Database`);
+    // Respond with the full user object (excluding password if you want)
+    res.status(201).json(newUser);
 });
 
 // Get all users
