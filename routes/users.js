@@ -1,7 +1,7 @@
 import express from 'express';
 const router = express.Router();
 import { v4 as uuidv4 } from 'uuid';
-import bcrypt from 'bcrypt';
+//import bcrypt from 'bcrypt';
 import xlsx from 'xlsx';
 import fs from 'fs';
 
@@ -33,7 +33,7 @@ router.post('/', async (req, res) => {
         return res.status(400).send('Password is required');
     }
 
-    const hashedPassword = await bcrypt.hash(user.password, 10);
+    //const hashedPassword = await bcrypt.hash(user.password, 10);
     const newUser = { ...user, password: hashedPassword, id: uuidv4() };
     users.push(newUser);
 
@@ -87,10 +87,8 @@ router.post('/login', async (req, res) => {
         return res.status(401).json({ message: 'Invalid email or password' });
     }
 
-    // Compare hashed password
-    const isMatch = await bcrypt.compare(password, user.password);
-
-    if (!isMatch) {
+    // Compare the encrypted password directly
+    if (password !== user.password) {
         return res.status(401).json({ message: 'Invalid email or password' });
     }
 
